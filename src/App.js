@@ -116,11 +116,10 @@ class App extends Component {
   setMessageRead = (setBool) => {
     let messageArr = this.state.messages;
     let newMessageArr = [];
-    console.log(setBool);
+
     newMessageArr = messageArr.map((message) => {
       if(message.selected){
         message.read = setBool;
-        console.log(message);
       }
       return message;
     })
@@ -128,10 +127,22 @@ class App extends Component {
 
   }
 
+  deleteMessages = () => {
+    let messageArr = this.state.messages;
+    let newMessageArr = [];
+
+    newMessageArr = messageArr.filter((message) => {
+      return false;
+    })
+
+    this.setState({messages: newMessageArr});
+
+  }
+
   render() {
     return (
       <div className="container">
-        <Toolbar messages={messageData} selectAllMessages={this.selectAllMessages} setMessageRead={this.setMessageRead}/>
+        <Toolbar messages={messageData} selectAllMessages={this.selectAllMessages} setMessageRead={this.setMessageRead} deleteMessages={this.deleteMessages}/>
         <MessageList messages={messageData} toggleStar={this.toggleStar} toggleSelected={this.toggleSelected}/>
       </div>
     );
