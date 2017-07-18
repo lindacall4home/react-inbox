@@ -68,7 +68,7 @@ const messageData = [
 class App extends Component {
   render() {
     return (
-      <div className="App container">
+      <div className="container">
         <Toolbar />
         <MessageList messages={messageData}/>
       </div>
