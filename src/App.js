@@ -66,11 +66,83 @@ const messageData = [
 ]
 
 class App extends Component {
+
+  state = {
+    messages: messageData
+  }
+
+  toggleStar = (messageId) => {
+
+    let messageArr = this.state.messages;
+    let selectedMessage = messageArr.find((message) => message.id === messageId);
+    selectedMessage.starred = !selectedMessage.starred;
+
+    this.setState({messages: messageArr});
+  }
+
+  toggleSelected = (messageId) => {
+
+    let messageArr = this.state.messages;
+    let selectedMessage = messageArr.find((message) => message.id === messageId);
+    selectedMessage.selected = !selectedMessage.selected;
+
+    this.setState({messages: messageArr});
+  }
+
+  selectAllMessages = (selectBool) => {
+    let messageArr = this.state.messages;
+    let newMessageArr = [];
+
+    if(selectBool){
+      newMessageArr = messageArr.map(message => {
+        message.selected = true;
+        return message;
+      })
+    }
+    else{
+      console.log(selectBool);
+
+      newMessageArr = messageArr.map(message => {
+        delete message.selected;
+        return message;
+      })
+    }
+
+    this.setState({messages: newMessageArr});
+
+  }
+
+  setMessageRead = (setBool) => {
+    let messageArr = this.state.messages;
+    let newMessageArr = [];
+
+    newMessageArr = messageArr.map((message) => {
+      if(message.selected){
+        message.read = setBool;
+      }
+      return message;
+    })
+    this.setState({messages: newMessageArr});
+
+  }
+
+  deleteMessages = () => {
+    let messageArr = this.state.messages;
+    let newMessageArr = [];
+
+    newMessageArr = messageArr.filter((message) => {
+      return false;
+    })
+
+    this.setState({messages: newMessageArr});
+
+  }
+
   render() {
     return (
       <div className="container">
-        <Toolbar />
-        <MessageList messages={messageData}/>
+        <Toolbar messages={messageData} selectAllMessages={this.selectAllMessages} setMessageRead={this.setMessageRead} deleteMessages={this.deleteMessages}/>
+        <MessageList messages={messageData} toggleStar={this.toggleStar} toggleSelected={this.toggleSelected}/>
       </div>
     );
   }
