@@ -67,6 +67,10 @@ const messageData = [
 ]
 
 class App extends Component {
+
+  toggleStar = (messageIndex) => {
+
+  }
   render() {
     return (
       <div className="container">
