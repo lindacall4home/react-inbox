@@ -69,7 +69,7 @@ const messageData = [
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="container">
         <Toolbar />
         <MessageList messages={messageData}/>
       </div>
