@@ -68,14 +68,25 @@ const messageData = [
 
 class App extends Component {
 
-  toggleStar = (messageIndex) => {
+  state = {
+    messages: messageData
+  }
+
+  toggleStar = (messageId) => {
+
+    let messageArr = this.state.messages;
+    let selectedMessage = messageArr.find((message) => message.id === messageId);
+    selectedMessage.starred = !selectedMessage.starred;
+
+    this.setState({messages: messageArr});
 
   }
+
   render() {
     return (
       <div className="container">
         <Toolbar />
-        <MessageList messages={messageData}/>
+        <MessageList messages={messageData} toggleStar={this.toggleStar}/>
       </div>
     );
   }
