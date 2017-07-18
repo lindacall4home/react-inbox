@@ -13,6 +13,10 @@ class Message extends React.Component {
     this.props.toggleStar(this.state.message.id);
   }
 
+  checkBoxHandler = (e) => {
+    this.props.toggleSelected(this.state.message.id);
+  }
+
 
   render() {
     let aggClassName = 'row message ' + ((this.state.message.read) ? 'read ' : 'unread ') + ((this.state.message.selected) ? 'selected' : '');
@@ -22,7 +26,7 @@ class Message extends React.Component {
         <div className="col-xs-1">
           <div className="row">
             <div className="col-xs-2">
-              <input type="checkbox" checked={this.state.message.selected}/>
+              <input type="checkbox" checked={this.state.message.selected === true ? true: false} onChange={this.checkBoxHandler}/>
             </div>
             <div className="col-xs-2">
               <i className={(this.state.message.starred) ? "star fa fa-star" : "star fa fa-star-o"} onClick={this.starClickHandler}></i>
