@@ -90,10 +90,33 @@ class App extends Component {
     this.setState({messages: messageArr});
   }
 
+  selectAllMessages = (selectBool) => {
+    let messageArr = this.state.messages;
+    let newMessageArr = [];
+
+    if(selectBool){
+      newMessageArr = messageArr.map(message => {
+        message.selected = true;
+        return message;
+      })
+    }
+    else{
+      console.log(selectBool);
+
+      newMessageArr = messageArr.map(message => {
+        delete message.selected;
+        return message;
+      })
+    }
+
+    this.setState({messages: newMessageArr});
+
+  }
+
   render() {
     return (
       <div className="container">
-        <Toolbar />
+        <Toolbar messages={messageData} selectAllMessages={this.selectAllMessages}/>
         <MessageList messages={messageData} toggleStar={this.toggleStar} toggleSelected={this.toggleSelected}/>
       </div>
     );
