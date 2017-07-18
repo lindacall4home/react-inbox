@@ -22,7 +22,7 @@ class Toolbar extends React.Component {
     return buttonClass;
   }
 
-  selectAllClickHandler = (e) => {
+  selectAllClickHandler = () => {
     this.props.selectAllMessages(!this.state.messages.every(message => message.selected));
   }
 
@@ -40,11 +40,11 @@ class Toolbar extends React.Component {
             <i className={this.getSelectButtonClass()}></i>
           </button>
 
-          <button className="btn btn-default">
+          <button className="btn btn-default"  onClick={() => this.props.setMessageRead(true)}>
             Mark As Read
           </button>
 
-          <button className="btn btn-default">
+          <button className="btn btn-default" onClick={() => this.props.setMessageRead(false)}>
             Mark As Unread
           </button>
 
