@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
-import Message from "./message";
+import React from 'react'
+import Message from './message';
 
-class MessageList extends Component{
-  render(){
-    return (
-      <div>
-        <Message />
-      </div>
-    );
-  }
-}
+const MessageList = ({messages}) =>  (
+  <div className="container">
+    {messages.map(message => <Message key={message.id} message={message}/>)}
+  </div>
+)
 
-export default MessageList;
+export default MessageList
