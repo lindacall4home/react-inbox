@@ -174,7 +174,6 @@ class App extends Component {
           messages={this.state.messages} selectAllMessages={this.selectAllMessages} setMessageRead={this.setMessageRead} deleteMessages={this.deleteMessages}
           addLabel={this.addLabel}
           removeLabel={this.removeLabel}
-
         />
 
         <MessageList
