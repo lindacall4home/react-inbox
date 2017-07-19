@@ -138,11 +138,54 @@ class App extends Component {
 
   }
 
+  addLabel = (label) => {
+    let messageArr = this.state.messages;
+    let newMessageArr = [];
+
+    newMessageArr = messageArr.map((message) => {
+      if(message.selected){
+        if(message.labels.indexOf(label) === -1){
+          message.labels.push(label);
+        }
+      }
+      return message;
+    })
+    this.setState({messages: newMessageArr});
+
+  }
+
+  removeLabel = (label) => {
+    let messageArr = this.state.messages;
+    let newMessageArr = [];
+
+    newMessageArr = messageArr.map((message) => {
+      if(message.selected){
+        let remove = message.labels.indexOf(label);
+        if (remove > -1){
+          message.labels.splice(remove, 1)
+        }
+      }
+      return message;
+    })
+    this.setState({messages: newMessageArr});
+  }
+
   render() {
     return (
       <div className="container">
-        <Toolbar messages={this.state.messages} selectAllMessages={this.selectAllMessages} setMessageRead={this.setMessageRead} deleteMessages={this.deleteMessages}/>
-        <MessageList messages={this.state.messages} toggleStar={this.toggleStar} toggleSelected={this.toggleSelected}/>
+        <Toolbar
+          messages={this.state.messages} selectAllMessages={this.selectAllMessages} setMessageRead={this.setMessageRead} deleteMessages={this.deleteMessages}
+          addLabel={this.addLabel}
+          removeLabel={this.removeLabel}
+
+        />
+
+        <MessageList
+          messages={this.state.messages}
+          toggleStar={this.toggleStar}
+          toggleSelected={this.toggleSelected}
+        />
+
       </div>
     );
   }

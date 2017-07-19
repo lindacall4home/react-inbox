@@ -40,7 +40,7 @@ class Toolbar extends React.Component {
             <i className={this.getSelectButtonClass()}></i>
           </button>
 
-          <button className="btn btn-default"  onClick={() => this.props.setMessageRead(true)}>
+          <button className="btn btn-default" onClick={() => this.props.setMessageRead(true)}>
             Mark As Read
           </button>
 
@@ -48,15 +48,15 @@ class Toolbar extends React.Component {
             Mark As Unread
           </button>
 
-          <select className="form-control label-select">
-            <option>Apply label</option>
+          <select value="apply" className="form-control label-select" onChange={(e) => this.props.addLabel(e.target.value)}>
+            <option disabled value="apply">Apply label</option>
             <option value="dev">dev</option>
             <option value="personal">personal</option>
             <option value="gschool">gschool</option>
           </select>
 
-          <select className="form-control label-select">
-            <option>Remove label</option>
+          <select value="remove" className="form-control label-select" onChange={(e) => this.props.removeLabel(e.target.value)}>
+            <option disabled value="remove">Remove label</option>
             <option value="dev">dev</option>
             <option value="personal">personal</option>
             <option value="gschool">gschool</option>
