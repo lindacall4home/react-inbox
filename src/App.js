@@ -66,10 +66,23 @@ const messageData = [
 ]
 
 class App extends Component {
-
-  state = {
-    messages: messageData
+  constructor(props){
+    super(props);
+    this.state = {
+      messages: messageData,
+      unread: 0
+    }
   }
+
+  componentDidMount(){
+    this.setUnreadCount();
+  }
+
+  setUnreadCount = () => {
+    let count = this.state.messages.filter(message => message.read === false).length;
+    this.setState({unread: count});
+  }
+
 
   toggleStar = (messageId) => {
 
@@ -171,7 +184,9 @@ class App extends Component {
     return (
       <div className="container">
         <Toolbar
-          messages={this.state.messages} selectAllMessages={this.selectAllMessages} setMessageRead={this.setMessageRead} deleteMessages={this.deleteMessages}
+          messages={this.state.messages}
+          setUnreadCount={this.setUnreadCount}
+          selectAllMessages={this.selectAllMessages} setMessageRead={this.setMessageRead} deleteMessages={this.deleteMessages}
           addLabel={this.addLabel}
           removeLabel={this.removeLabel}
         />
