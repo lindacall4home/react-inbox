@@ -4,11 +4,11 @@ class Message extends React.Component {
 
 
   starClickHandler = (e) => {
-    this.props.toggleStar(this.props.message.id);
+    this.props.appState.toggleStar(this.props.message.id);
   }
 
   checkBoxHandler = (e) => {
-    this.props.toggleSelected(this.props.message.id);
+    this.props.appState.toggleSelected(this.props.message.id);
   }
 
 
