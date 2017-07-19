@@ -71,10 +71,6 @@ class App extends Component {
     this.state = {
       messages: messageData,
       unread: 0,
-      getUnreadCount: () => {
-        let count = this.state.messages.filter(message => message.read === false).length;
-        return count;
-      },
 
       toggleStar: (messageId) => {
 
@@ -112,7 +108,7 @@ class App extends Component {
         }
 
         this.setState({messages: newMessageArr,
-                      unread: this.state.getUnreadCount()});
+                      unread: this.getUnreadCount(newMessageArr)});
 
       },
 
@@ -127,7 +123,7 @@ class App extends Component {
           return message;
         })
         this.setState({messages: newMessageArr,
-                      unread: this.state.getUnreadCount()});
+                      unread: this.getUnreadCount(newMessageArr)});
       },
 
       deleteMessages: () => {
@@ -138,8 +134,7 @@ class App extends Component {
           return !message.selected;
         })
         this.setState({messages: newMessageArr,
-                      unread: this.state.getUnreadCount()});
-
+                      unread: this.getUnreadCount(newMessageArr)});
       },
 
       addLabel: (label) => {
@@ -176,8 +171,14 @@ class App extends Component {
     }
   }
 
+  getUnreadCount = (messagesArray) => {
+    let count = messagesArray.filter(message => message.read === false).length;
+    console.log('count', count);
+    return count;
+  }
+
   componentDidMount(){
-    this.setState({unread: this.state.getUnreadCount()});
+    this.setState({unread: this.getUnreadCount(this.state.messages)});
   }
 
   render() {
