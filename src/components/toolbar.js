@@ -1,15 +1,6 @@
 import React from 'react'
 
 class Toolbar extends React.Component {
-  // constructor(props){
-  //   super(props);
-  //   this.state = {
-  //     message: this.props.message
-  //   }
-  //   if (this.props.messages.some(message => message.selected)){
-  //     document.getElementsByTagName('button').setAttribute("disabled", "true");
-  //   }
-  // }
 
   getSelectButtonClass = () => {
     let buttonClass = 'fa ';
