@@ -173,7 +173,6 @@ class App extends Component {
 
   getUnreadCount = (messagesArray) => {
     let count = messagesArray.filter(message => message.read === false).length;
-    console.log('count', count);
     return count;
   }
 
