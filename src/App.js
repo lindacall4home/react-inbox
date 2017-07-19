@@ -75,12 +75,13 @@ class App extends Component {
   }
 
   componentDidMount(){
-    this.setUnreadCount();
+    this.setState({unread: this.getUnreadCount()});
   }
 
-  setUnreadCount = () => {
+  getUnreadCount = () => {
     let count = this.state.messages.filter(message => message.read === false).length;
-    this.setState({unread: count});
+    console.log(count);
+    return count;
   }
 
 
@@ -119,7 +120,8 @@ class App extends Component {
       })
     }
 
-    this.setState({messages: newMessageArr});
+    this.setState({messages: newMessageArr,
+                  unread: this.getUnreadCount()});
 
   }
 
@@ -133,8 +135,8 @@ class App extends Component {
       }
       return message;
     })
-    this.setState({messages: newMessageArr});
-
+    this.setState({messages: newMessageArr,
+                  unread: this.getUnreadCount()});
   }
 
   deleteMessages = () => {
@@ -144,7 +146,8 @@ class App extends Component {
     newMessageArr = messageArr.filter((message) => {
       return !message.selected;
     })
-    this.setState({messages: newMessageArr});
+    this.setState({messages: newMessageArr,
+                  unread: this.getUnreadCount()});
 
   }
 
@@ -185,6 +188,7 @@ class App extends Component {
       <div className="container">
         <Toolbar
           messages={this.state.messages}
+          unread={this.state.unread}
           setUnreadCount={this.setUnreadCount}
           selectAllMessages={this.selectAllMessages} setMessageRead={this.setMessageRead} deleteMessages={this.deleteMessages}
           addLabel={this.addLabel}
