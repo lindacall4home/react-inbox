@@ -26,8 +26,8 @@ class Toolbar extends React.Component {
       <div className="row toolbar">
         <div className="col-md-12">
           <p className="pull-right">
-            <span className="badge badge">{this.props.messages.filter(message => (message.read === false)).length}</span>
-            unread {(this.props.messages.filter(message => (message.read === false)).length === 1) ? 'message' : 'messages'}
+            <span className="badge badge">{this.props.unread}</span>
+            unread {(this.props.unread === 1) ? 'message' : 'messages'}
           </p>
 
           <button className="btn btn-default" onClick={this.selectAllClickHandler}>
