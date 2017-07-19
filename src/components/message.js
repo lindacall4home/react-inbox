@@ -35,7 +35,7 @@ class Message extends React.Component {
         </div>
         <div className="col-xs-11">
          {this.state.message.labels.map((label, index) => (<span className="label label-warning" key={index}>{label}</span>))}
-          <a href="#">
+          <a href="/someplace">
             {this.state.message.subject}
           </a>
         </div>
