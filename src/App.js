@@ -100,8 +100,6 @@ class App extends Component {
       })
     }
     else{
-      console.log(selectBool);
-
       newMessageArr = messageArr.map(message => {
         delete message.selected;
         return message;
@@ -133,7 +131,6 @@ class App extends Component {
     newMessageArr = messageArr.filter((message) => {
       return !message.selected;
     })
-    console.log(newMessageArr);
     this.setState({messages: newMessageArr});
 
   }

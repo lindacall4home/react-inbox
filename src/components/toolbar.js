@@ -1,19 +1,13 @@
 import React from 'react'
 
 class Toolbar extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      messages: this.props.messages
-    }
-  }
 
   getSelectButtonClass = () => {
     let buttonClass = 'fa ';
-    if(this.state.messages.every(message => message.selected)){
+    if(this.props.messages.every(message => message.selected)){
       buttonClass += 'fa-check-square-o';
     }
-    else if(this.state.messages.some(message => message.selected)){
+    else if(this.props.messages.some(message => message.selected)){
       buttonClass += 'fa-minus-square-o';
     }
     else{
@@ -23,7 +17,7 @@ class Toolbar extends React.Component {
   }
 
   selectAllClickHandler = () => {
-    this.props.selectAllMessages(!this.state.messages.every(message => message.selected));
+    this.props.selectAllMessages(!this.props.messages.every(message => message.selected));
   }
 
   render() {
@@ -32,8 +26,8 @@ class Toolbar extends React.Component {
       <div className="row toolbar">
         <div className="col-md-12">
           <p className="pull-right">
-            <span className="badge badge">2</span>
-            unread messages
+            <span className="badge badge">{this.props.messages.filter(message => (message.read === false)).length}</span>
+            unread {(this.props.messages.filter(message => (message.read === false)).length === 1) ? 'message' : 'messages'}
           </p>
 
           <button className="btn btn-default" onClick={this.selectAllClickHandler}>
