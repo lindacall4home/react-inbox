@@ -70,136 +70,123 @@ class App extends Component {
     super(props);
     this.state = {
       messages: messageData,
-      unread: 0
+      unread: 0,
+      getUnreadCount: () => {
+        let count = this.state.messages.filter(message => message.read === false).length;
+        console.log(count);
+        return count;
+      },
+
+      toggleStar: (messageId) => {
+
+        let messageArr = this.state.messages;
+        let selectedMessage = messageArr.find((message) => message.id === messageId);
+        selectedMessage.starred = !selectedMessage.starred;
+
+        this.setState({messages: messageArr});
+      },
+
+      toggleSelected: (messageId) => {
+
+        let messageArr = this.state.messages;
+        let selectedMessage = messageArr.find((message) => message.id === messageId);
+        selectedMessage.selected = !selectedMessage.selected;
+
+        this.setState({messages: messageArr});
+      },
+
+      selectAllMessages: (selectBool) => {
+        let messageArr = this.state.messages;
+        let newMessageArr = [];
+
+        if(selectBool){
+          newMessageArr = messageArr.map(message => {
+            message.selected = true;
+            return message;
+          })
+        }
+        else{
+          newMessageArr = messageArr.map(message => {
+            delete message.selected;
+            return message;
+          })
+        }
+
+        this.setState({messages: newMessageArr,
+                      unread: this.state.getUnreadCount()});
+
+      },
+
+      setMessageRead: (setBool) => {
+        let messageArr = this.state.messages;
+        let newMessageArr = [];
+
+        newMessageArr = messageArr.map((message) => {
+          if(message.selected){
+            message.read = setBool;
+          }
+          return message;
+        })
+        this.setState({messages: newMessageArr,
+                      unread: this.state.getUnreadCount()});
+      },
+
+      deleteMessages: () => {
+        let messageArr = this.state.messages;
+        let newMessageArr = [];
+
+        newMessageArr = messageArr.filter((message) => {
+          return !message.selected;
+        })
+        this.setState({messages: newMessageArr,
+                      unread: this.state.getUnreadCount()});
+
+      },
+
+      addLabel: (label) => {
+        let messageArr = this.state.messages;
+        let newMessageArr = [];
+
+        newMessageArr = messageArr.map((message) => {
+          if(message.selected){
+            if(message.labels.indexOf(label) === -1){
+              message.labels.push(label);
+            }
+          }
+          return message;
+        })
+        this.setState({messages: newMessageArr});
+
+      },
+
+      removeLabel: (label) => {
+        let messageArr = this.state.messages;
+        let newMessageArr = [];
+
+        newMessageArr = messageArr.map((message) => {
+          if(message.selected){
+            let remove = message.labels.indexOf(label);
+            if (remove > -1){
+              message.labels.splice(remove, 1)
+            }
+          }
+          return message;
+        })
+        this.setState({messages: newMessageArr});
+      }
     }
   }
 
   componentDidMount(){
-    this.setState({unread: this.getUnreadCount()});
-  }
-
-  getUnreadCount = () => {
-    let count = this.state.messages.filter(message => message.read === false).length;
-    console.log(count);
-    return count;
-  }
-
-
-  toggleStar = (messageId) => {
-
-    let messageArr = this.state.messages;
-    let selectedMessage = messageArr.find((message) => message.id === messageId);
-    selectedMessage.starred = !selectedMessage.starred;
-
-    this.setState({messages: messageArr});
-  }
-
-  toggleSelected = (messageId) => {
-
-    let messageArr = this.state.messages;
-    let selectedMessage = messageArr.find((message) => message.id === messageId);
-    selectedMessage.selected = !selectedMessage.selected;
-
-    this.setState({messages: messageArr});
-  }
-
-  selectAllMessages = (selectBool) => {
-    let messageArr = this.state.messages;
-    let newMessageArr = [];
-
-    if(selectBool){
-      newMessageArr = messageArr.map(message => {
-        message.selected = true;
-        return message;
-      })
-    }
-    else{
-      newMessageArr = messageArr.map(message => {
-        delete message.selected;
-        return message;
-      })
-    }
-
-    this.setState({messages: newMessageArr,
-                  unread: this.getUnreadCount()});
-
-  }
-
-  setMessageRead = (setBool) => {
-    let messageArr = this.state.messages;
-    let newMessageArr = [];
-
-    newMessageArr = messageArr.map((message) => {
-      if(message.selected){
-        message.read = setBool;
-      }
-      return message;
-    })
-    this.setState({messages: newMessageArr,
-                  unread: this.getUnreadCount()});
-  }
-
-  deleteMessages = () => {
-    let messageArr = this.state.messages;
-    let newMessageArr = [];
-
-    newMessageArr = messageArr.filter((message) => {
-      return !message.selected;
-    })
-    this.setState({messages: newMessageArr,
-                  unread: this.getUnreadCount()});
-
-  }
-
-  addLabel = (label) => {
-    let messageArr = this.state.messages;
-    let newMessageArr = [];
-
-    newMessageArr = messageArr.map((message) => {
-      if(message.selected){
-        if(message.labels.indexOf(label) === -1){
-          message.labels.push(label);
-        }
-      }
-      return message;
-    })
-    this.setState({messages: newMessageArr});
-
-  }
-
-  removeLabel = (label) => {
-    let messageArr = this.state.messages;
-    let newMessageArr = [];
-
-    newMessageArr = messageArr.map((message) => {
-      if(message.selected){
-        let remove = message.labels.indexOf(label);
-        if (remove > -1){
-          message.labels.splice(remove, 1)
-        }
-      }
-      return message;
-    })
-    this.setState({messages: newMessageArr});
+    this.setState({unread: this.state.getUnreadCount()});
   }
 
   render() {
     return (
       <div className="container">
-        <Toolbar
-          messages={this.state.messages}
-          unread={this.state.unread}
-          setUnreadCount={this.setUnreadCount}
-          selectAllMessages={this.selectAllMessages} setMessageRead={this.setMessageRead} deleteMessages={this.deleteMessages}
-          addLabel={this.addLabel}
-          removeLabel={this.removeLabel}
-        />
+        <Toolbar appState={this.state}/>
 
-        <MessageList
-          messages={this.state.messages}
-          toggleStar={this.toggleStar}
-          toggleSelected={this.toggleSelected}
-        />
+        <MessageList appState={this.state}/>
 
       </div>
     );

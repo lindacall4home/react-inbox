@@ -1,9 +1,9 @@
 import React from 'react'
 import Message from './message';
 
-const MessageList = ({messages, toggleStar, toggleSelected}) =>  (
+const MessageList = ({appState}) =>  (
   <div className="container">
-    {messages.map(message => <Message key={message.id} message={message} toggleStar={toggleStar} toggleSelected={toggleSelected}/>)}
+    {appState.messages.map(message => <Message key={message.id} appState={appState} message={message}/>)}
   </div>
 )
 
