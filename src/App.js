@@ -80,7 +80,6 @@ class App extends Component {
 
   getUnreadCount = () => {
     let count = this.state.messages.filter(message => message.read === false).length;
-    console.log(count);
     return count;
   }
 
@@ -189,7 +188,6 @@ class App extends Component {
         <Toolbar
           messages={this.state.messages}
           unread={this.state.unread}
-          setUnreadCount={this.setUnreadCount}
           selectAllMessages={this.selectAllMessages} setMessageRead={this.setMessageRead} deleteMessages={this.deleteMessages}
           addLabel={this.addLabel}
           removeLabel={this.removeLabel}
